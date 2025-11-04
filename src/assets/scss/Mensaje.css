@@ -1,0 +1,24 @@
+
+.display-mensaje {
+    display: grid ;
+    justify-content: center; 
+    align-items: center;
+    position: relative;
+    width : 600px;
+    height: 600px;
+    border: #309e2c 3px;
+    transform: translateX(-110px);
+    background-image: url("./images/images-bomba/Defuser_Completo.png");
+  }
+
+  .mensaje {
+    height: 15px ;
+    width : 160px;
+    transform: translateY(-45px);
+    font-family: 'DS-DIGITB', monospace;
+    font-size: 15px;
+    color: rgb(8, 10, 8);
+    background: #309e2c;
+    border: 3px solid black;
+    border-color:black ;
+}

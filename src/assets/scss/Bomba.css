@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
+
+  .bomba-principal {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width : 100%;
+    height: 100%;
+    background-image: url("./images/images-bomba/bomba-principal.png");
+  }
+
+  .bomba-modulo {
+    background-position: center;
+	  background-repeat: no-repeat;
+	  background-size: contain;
+	  display: flex;
+	  flex-direction: column;
+  	align-items: center;
+	  justify-content: center;
+    position: relative;
+    width : 100%;
+    height: 100%;
+    background-image: url("./images/images-bomba/bomba-modulo.png");
+  }
+
+  .button-container-modulo{ 
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    position: absolute;
+    width: 8%;
+    height: 8%;
+    transform: translateY(315%);
+    background-color: rgba(128, 128, 128, 0.5); /* gris semitransparente */
+    border-radius: 10%;
+  }
+  
+.button-container-principal{ 
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    position: absolute;
+    width: 4%;
+    height: 4%;
+    transform: translateY(342%);
+    background-color: rgba(128, 128, 128, 0.5); /* gris semitransparente */
+    border-radius: 10%;
+  }
+
+
+.button-modulo {
+  width: 100%; /* tamaño ajustable */
+  height: 100%;
+  background-image: url("./images/images-bomba/boton.png");
+  background-size: cover;
+  background-position: center;
+  border: none;
+  border-radius: 5px; 
+  font-size: 15px; 
+  font-family: 'Staatliches', sans-serif; 
+  cursor: pointer;
+  transition: 0.1s; 
+  text-transform: uppercase; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+button:hover {
+    background-color: darkred;
+    border-color: white;
+}
+
+.button-modulo:active {
+  background-image: url("./images/images-bomba/boton-pulsado.png");
+  transform: scale(0.98); /* opcional: da sensación de “presión” */
+}
