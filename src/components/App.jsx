@@ -12,6 +12,7 @@ export default function App() {
   const hasExecutedEscappValidation = useRef(false);
   const [loading, setLoading] = useState(true);
   const [screen, setScreen] = useState(MAIN_SCREEN);
+  const [time,setTime]= useState();
   const prevScreen = useRef(screen);
   const solution = useRef(null);
   const [appWidth, setAppWidth] = useState(0);
@@ -52,18 +53,6 @@ export default function App() {
 
     let skinSettings;
     switch(_appSettings.skin){
-      case "RETRO":
-        skinSettings = SKIN_SETTINGS_RETRO;
-        break;
-      case "RETRO_JUNGLE":
-        skinSettings = SKIN_SETTINGS_RETRO_JUNGLE;
-        break;
-      case "RETRO_REALISTIC":
-        skinSettings = SKIN_SETTINGS_RETRO_REALISTIC;
-        break;
-      case "FUTURISTIC":
-        skinSettings = SKIN_SETTINGS_FUTURISTIC;
-        break;
       default:
         skinSettings = {};
     }
@@ -77,27 +66,13 @@ export default function App() {
       _appSettings.actionAfterSolve = DEFAULT_APP_SETTINGS.actionAfterSolve;
     }
 
-    switch(_appSettings.keysType){
-      case "LETTERS":
-        _appSettings.keys = _appSettings.letters;
-        _appSettings.backgroundKeys = new Array(12).fill(_appSettings.backgroundKey);
-        break;
-      case "COLORS":
-        _appSettings.keys = _appSettings.colors;
-        _appSettings.backgroundKeys = _appSettings.coloredBackgroundKeys;
-        break;
-      case "SYMBOLS":
-        _appSettings.keys = _appSettings.symbols;
-        if((_appSettings.skin === "FUTURISTIC")&&(_appSettings.backgroundKey === "images/background_key_futuristic.png")){
-          _appSettings.backgroundKey = "images/background_key_futuristic_black.png";
-        }
-        _appSettings.backgroundKeys = new Array(12).fill(_appSettings.backgroundKey);
-        break;
-      default:
-        //NUMBERS
-        _appSettings.keys = _appSettings.numbers;
-        _appSettings.backgroundKeys = new Array(12).fill(_appSettings.backgroundKey);
+    _appSettings.numberOfWires = Math.min(_appSettings.numberOfWires, _appSettings.colors.length);
+
+    if((typeof _appSettings.solutionLength !== "number")||(_appSettings.solutionLength < 1)){
+      _appSettings.solutionLength = _appSettings.numberOfWires;
     }
+
+    _appSettings.timer_enabled = (_appSettings.timer === "TRUE");
 
     //Init internacionalization module
     I18n.init(_appSettings);
@@ -147,6 +122,24 @@ export default function App() {
         try {
           Utils.log("ESCAPP validation", success, erState);
           if(success){
+
+            // 1. Calculamos endTime
+            const endTime = new Date(new Date(erState.startTime).getTime() + erState.duration * 1000);
+
+            // 2. Calculamos cuánto falta desde ahora
+            const now = new Date();
+            const remainingMs = endTime - now; // diferencia en milisegundos
+            const remainingSeconds = Math.floor(remainingMs / 1000);
+            const remainingMinutes = Math.floor(remainingSeconds / 60);
+
+            // Utils.log("endTime:", endTime.toISOString());
+            // Utils.log("Falta (ms):", remainingMs);
+            Utils.log("Faltan (s):", remainingSeconds);
+            // Utils.log("Falta (min):", remainingMinutes);
+
+            setTime(remainingSeconds);
+
+
             restoreAppState(erState);
             setLoading(false);
           }
@@ -262,7 +255,7 @@ export default function App() {
   let screens = [
     {
       id: MAIN_SCREEN,
-      content: <MainScreen appHeight={appHeight} appWidth={appWidth} onKeypadSolved={onKeypadSolved} />
+      content: <MainScreen appHeight={appHeight} appWidth={appWidth} onKeypadSolved={onKeypadSolved} time={time}  />
     },
     {
       id: MESSAGE_SCREEN,

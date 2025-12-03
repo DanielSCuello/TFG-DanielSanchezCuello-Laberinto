@@ -2,18 +2,19 @@ import { useEffect, useState , useContext } from "react";
 import './../assets/scss/Modulo.css';
 import { GlobalContext } from "./GlobalContext";
 import Temporizador from "./Temporizador.jsx";
-import Cables from "./ModuloCables.jsx";
-import Tapa from "./Tapa.jsx" 
+import Laberinto from "./ModuloLaberinto.jsx";
 
-function Modulo({reinicio,setReinicio, descubierto,setDescubierto, onKeypadSolved}) {
-  const { escapp , Utils} = useContext(GlobalContext);
+function Modulo({reinicio,setReinicio, descubierto,setDescubierto, onKeypadSolved , time}) {
+  const { escapp, appSettings, Utils} = useContext(GlobalContext);
   const [fallado,setFallado] = useState(false);
   const [resuelto,setResuelto] = useState(false);
-  const [solucion, setSolucion] = useState([]);
+  const [solution, setSolution] = useState();
 
   useEffect(() => {
+    if (!(String(appSettings.timer).toLowerCase() === "true")|| time >= 0) {
     setResuelto(false);
     setFallado(false);
+    }
     setReinicio(false);
   }, [reinicio]);
 
@@ -24,8 +25,14 @@ function Modulo({reinicio,setReinicio, descubierto,setDescubierto, onKeypadSolve
   }, []);
 
   useEffect(() => {
-    Utils.log("Check solution", solucion);
-    escapp.submitNextPuzzle(solucion, {}, (success, erState) => {
+    if(typeof solution !== "string"){
+      return;
+    }
+
+
+    Utils.log("Check solution", solution);
+
+    escapp.submitNextPuzzle(solution, {}, (success, erState) => {
       Utils.log("Check solution Escapp response", success, erState);
       try {
         setTimeout(() => {
@@ -35,14 +42,14 @@ function Modulo({reinicio,setReinicio, descubierto,setDescubierto, onKeypadSolve
         Utils.log("Error in checkNextPuzzle",e);
       }
     });
-  }, [solucion]);
+  }, [solution]);
 
   const changeBoxLight = (success) => {
     let audio;
-    if (solucion.length === 0) return;
+    if (solution.length === 0) return;
     if(success){
        setResuelto(true);
-       onKeypadSolved(solucion);
+       onKeypadSolved();
        audio = document.getElementById("bomba_desactivada");
     }
     else{
@@ -58,10 +65,8 @@ function Modulo({reinicio,setReinicio, descubierto,setDescubierto, onKeypadSolve
       <div className={fallado ? `luz-roj${descubierto ? "" : "-principal"}` : resuelto ? `luz-ver${descubierto ? "" : "-principal"}` : `luz-apa${descubierto ? "" : "-principal"}`}/>
       <audio id="bomba_desactivada" src="sounds/bomba_desactivada.mp3" autostart="false" preload="auto" />
       <audio id="solution_nok" src="sounds/solution_nok.mp3" autostart="false" preload="auto" />
-      <Temporizador inicialMinutos={5} resuelto={resuelto} setFallado={setFallado} fallado={fallado} reinicio={reinicio} descubierto={descubierto}/>
-      <div className="tapa-container">
-        {descubierto ? <Cables  fallado={fallado} reinicio={reinicio} setSolucion={setSolucion}/> : <Tapa setDescubierto={setDescubierto} descubierto={descubierto}/>}
-      </div>
+      {String(appSettings.timer).toLowerCase() === "true" && <Temporizador inicialSegundos={time} resuelto={resuelto} setFallado={setFallado} fallado={fallado} reinicio={reinicio} descubierto={descubierto}/>}
+      <Laberinto fallado={fallado} reinicio={reinicio} setSolution={setSolution}  setDescubierto={setDescubierto} descubierto={descubierto}/>
     </div>
   );
 }

@@ -29,17 +29,24 @@ const MainScreen = (props) => {
     setContainerHeight(_containerHeight);
   }
 
-  let backgroundImage = '';
-  if(appSettings.background && appSettings.background !== "NONE"){
-    backgroundImage += ', url("' + appSettings.background + '")';
+  let backgroundStyle = {};
+
+  if (appSettings.background && appSettings.background !== "NONE") {
+    backgroundStyle = {
+      backgroundImage: `url("${appSettings.background}")`,
+      backgroundSize: "cover",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+    };
   }
 
   return (
-    <div id="screen_main" className={"screen_content"} style={{ backgroundImage: backgroundImage }}>
+    <div id="screen_main" className="screen_content" style={backgroundStyle}>
       <div id="bomb" style={{ width: containerWidth, height: containerHeight }}>
-         <Bomba onKeypadSolved={props.onKeypadSolved} />
+        <Bomba onKeypadSolved={props.onKeypadSolved} appSettings={props.appSettings} time={props.time} />
       </div>
-    </div>);
-};
+    </div>
+  );
+}
 
 export default MainScreen;

@@ -1,0 +1,165 @@
+.tablas-container {
+    width: 100%;
+    height: 110%;
+    position: relative;     /* 👉 necesario */
+    top: -10%;
+    display: flex;
+    flex-direction: column; 
+    align-items: center; 
+    z-index: 1;
+}
+
+.tablas-container-tapa {
+    width: 100%;
+    height: 110%;
+    display: flex;
+    top: -30%;
+    filter: blur(1px);
+    flex-direction: column; 
+    align-items: center; 
+    gap: 20%; 
+    z-index: 1;
+}
+
+.tabla-laberinto {
+    position: absolute; 
+    top: 5%;
+    left: 50%;
+    width: 70%; 
+    height: 70%;
+    transform: translateX(-50%);
+    border: 1px #000000;
+    border-collapse: collapse; 
+}
+
+.tabla-laberinto-tapa {
+    position: absolute; 
+    top: 10%;
+    left: 50%;
+    width: 70%; 
+    height: 70%;
+    filter: blur(1px);
+    transform: translateX(-50%);
+    border: 1px #000000;
+    border-collapse: collapse; 
+}
+
+.tabla-laberinto td {
+    position: relative;
+    justify-content: center; 
+    align-items: center;
+    position: relative;
+    border: 1px solid black;
+    text-align: left;
+    background-color: #309e2c; 
+}
+
+
+.cuadrado-jugador{
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    width: 15%;  
+    height: 15%;
+    background-color: red;
+}
+
+.cuadrado-final{
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    width: 15%;  
+    height: 15%;
+    background-color: rgb(254, 254, 254);
+}
+.tabla-boton {
+    border-collapse: collapse;
+    transform: translateY(330%);
+    margin-top: 10%;
+    width: 80%;
+    height: 20%;
+}
+
+
+.boton-derecha , .boton-izquierda , .boton-abajo , .boton-arriba {
+    width: 100%;
+    height: 100%;
+    justify-content: center; 
+    align-items: center;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.boton-derecha{
+    background-image: url("./images/images-laberinto/boton-derecha.png");
+}
+
+.boton-izquierda{
+    background-image: url("./images/images-laberinto/boton-izquierda.png");
+}
+
+.boton-arriba{
+    background-image: url("./images/images-laberinto/boton-arriba.png");
+}
+
+.boton-abajo{
+    background-image: url("./images/images-laberinto/boton-abajo.png");
+}
+
+.tapa-superpuesta {
+    position: absolute;
+    left: 0;
+
+    width: 100%;
+    height: 110%;
+
+    z-index: 10;  
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("./images/images-bomba/Tapa.png");
+
+    cursor: pointer;
+}
+
+.tapa-fall {
+    animation: fall 2s ease-in-out forwards;
+}
+
+.modulo-centro{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    top: 35%;
+
+    position: relative;
+    width: 92%;
+    height: 50%;
+}
+
+@keyframes fall {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(200px);
+        opacity: 0.5; 
+    }
+}
+
+@keyframes glow {
+  0% {box-shadow: 0 0 4px 2px rgba(255, 255, 0, 0.4);
+  }
+  50% {box-shadow: 0 0 12px 6px rgba(255, 255, 0, 0.9);
+  }
+  100% {box-shadow: 0 0 4px 2px rgba(255, 255, 0, 0.4);
+  }
+}

@@ -14,6 +14,20 @@
     background-image: url("./images/images-bomba/bomba-principal.png");
   }
 
+  .bomba-principal-background {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width : 100%;
+    height: 100%;
+    background-image: url("./images/images-bomba/bomba-principal-background.png");
+  }
+
   .bomba-modulo {
     background-position: center;
 	  background-repeat: no-repeat;
@@ -28,6 +42,39 @@
     background-image: url("./images/images-bomba/bomba-modulo.png");
   }
 
+  /* === ZONAS CLICKABLES INVISIBLES A LOS LATERALES === */
+
+  .bomba-modulo-back-izq,
+  .bomba-modulo-back-der {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 30%;       
+    cursor: pointer;
+    z-index: 2;       
+    background: transparent;
+    pointer-events: auto;
+    cursor: url('./images/images-bomba/retroceso.png'), auto;
+  }
+
+  /* Zona izquierda */
+  .bomba-modulo-back-izq {
+    left: 0;
+  }
+
+  /* Zona derecha */
+  .bomba-modulo-back-der {
+    right: 0;
+  }
+
+  /* ✅ Esto garantiza que el contenido del centro quede encima */
+  .bomba-modulo > *:not(.bomba-modulo-back-izq):not(.bomba-modulo-back-der) {
+    position: relative;
+    z-index: 5;
+    pointer-events: auto;
+  }
+
+
   .button-container-modulo{ 
     display: flex;
     justify-content: center; 
@@ -35,7 +82,7 @@
     position: absolute;
     width: 8%;
     height: 8%;
-    transform: translateY(315%);
+    transform: translateY(-100%);
     background-color: rgba(128, 128, 128, 0.5); /* gris semitransparente */
     border-radius: 10%;
   }
