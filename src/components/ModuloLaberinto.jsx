@@ -58,6 +58,7 @@ function Laberinto({ setSolution, resuelto, fallado, reinicio, descubierto, setD
       posicionJugador.x === final.x &&
       posicionJugador.y === final.y
     ) {
+      console.log("Solucion: "+ orden )
       setSolution(orden);
     }
   }, [posicionJugador, final, orden, setSolution]);
