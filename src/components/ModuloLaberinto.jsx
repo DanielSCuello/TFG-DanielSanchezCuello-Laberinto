@@ -35,9 +35,13 @@ function Laberinto({ setSolution, resuelto, fallado, reinicio, descubierto, setD
   }
 
   const appendMove = (pos) =>
-    setOrden((prev) =>
-      prev ? `${prev};${pos.x},${pos.y}` : `${pos.x},${pos.y}`
-  );
+  setOrden((prev) => {
+    const xVisual = pos.x + 1;        
+    const yVisual = rows - pos.y;     
+
+    const nuevo = `${xVisual},${yVisual}`;
+    return prev ? `${prev};${nuevo}` : nuevo;
+  });
 
   const grid = useMemo(
     () =>
@@ -107,7 +111,7 @@ function Laberinto({ setSolution, resuelto, fallado, reinicio, descubierto, setD
       <div className={descubierto ? "tablas-container" : "tablas-container-tapa"}>
         <table className="tabla-laberinto">
           <tbody>
-            {grid.map((row, y) => (
+            {[...grid].reverse().map((row, y) => (
               <tr key={`row-${y}`}>
                 {row.map((cell, x) => (
                   <td key={`cell-${y}-${x}`}>
